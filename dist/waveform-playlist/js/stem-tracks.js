@@ -14,10 +14,11 @@ var playlist = WaveformPlaylist.init({
   zoomLevels: [500, 1000, 3000, 5000],
 });
 
+var Vocals30 = "media/audio/Vocals30.mp3"
 playlist
   .load([
     {
-      src: "media/audio/Vocals30.mp3",
+      src: Vocals30,
       name: "Vocals",
     },
     {

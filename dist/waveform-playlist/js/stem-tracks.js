@@ -1,3 +1,6 @@
+function get_tracks(){
+   
+}
 var playlist = WaveformPlaylist.init({
   samplesPerPixel: 1000,
   waveHeight: 100,

@@ -1,5 +1,13 @@
-var fs = require('fs');
+const fs = require('fs');
 let files = fs.readdirSync('../media/audio/Weezer/');
+
+fs.readdir('../media/audio/Weezer/', (err, files) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  // Do something with the files
+});
 
 var http = require('http');
 
@@ -12,14 +20,14 @@ http.createServer( function(req, res) {
         req.on('end', function () {
 			if(msg === 'button=1') {
 				res.writeHead(200, {'Content-Type': 'text/html'});
-				res.end(printTracks());	// this is for the web page.
-				console.log('success'); // this is to show in the server console.
-			}
-			else if(msg === 'button=2') {
-				res.writeHead(200, {'Content-Type': 'text/html'});
-				// res.end(files);	// this is for the web page.
+				// res.end(printTracks());	// this is for the web page.
         // document.getElementById('tracklist').innerHTML = files
-				console.log(files); // this is to show in the server console.
+			  res.end(`<html>
+			   <body>` + files + `
+			   </body>
+			   </html>`);
+
+				console.log(msg); // this is to show in the server console.
 			}
 			else {
 				res.writeHead(400, {'Content-Type': 'text/html'});
@@ -35,11 +43,6 @@ http.createServer( function(req, res) {
 			</html>`);
 	}
 }).listen(8081);
-// http.createServer(function (req, res) {
-//   res.writeHead(200, {'Content-Type': 'text/html'});
-//   console.log(files);
-//   res.end('Hello World!');
-// }).listen(8080);
 
 function test() {
   return 'hello woild';
@@ -47,8 +50,12 @@ function test() {
 
 function printTracks() {
   var allfiles = '';
+  let files = fs.readdirSync('../media/audio/Weezer/');
+  console.log("cliccicked");
   files.forEach(file => {
     console.log(file);
-    return '<DOCTYPE html> <html><body> ' + allfiles + '</body></html>';
+    // return '<!DOCTYPE html> <html><body> ' + allfiles + '</body></html>';
+
+    return allfiles
   });
 }

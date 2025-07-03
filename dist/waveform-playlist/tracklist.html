@@ -1,8 +1,8 @@
-<html><body onload="test()">
-<form action="http://localhost:8081/" method="post">
-		<button name="button" value="2">Button 2</button>
-    <p id="tracklist"></p>
+<html><body id="tracklist">
+  <script>document.getElementById("tracklist").innerHTML = test()</script>
+  <form action="http://localhost:8081/" method="post">
+		<button name="button" value="1">Button 2</button>
 		</form>
 </body>
-<script type="text/javascript" src="./js/fileloader.js"></script>
+<script type="text/javascript" src="js/fileloader.js"></script>
 </html>

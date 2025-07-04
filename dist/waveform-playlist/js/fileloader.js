@@ -11,6 +11,16 @@ fs.readdir('../media/audio/Weezer/', (err, files) => {
 
 var http = require('http');
 
+let formattedFiles = "";
+function fileList(){
+  files.forEach(element => {
+    formattedFiles += element;
+    formattedFiles += "<br>"
+  });
+  return formattedFiles;
+}
+
+
 http.createServer( function(req, res) {
     if (req.method == 'POST') {
 		var msg = '';
@@ -20,13 +30,16 @@ http.createServer( function(req, res) {
         req.on('end', function () {
 			if(msg === 'button=1') {
 				res.writeHead(200, {'Content-Type': 'text/html'});
-				// res.end(printTracks());	// this is for the web page.
-        // document.getElementById('tracklist').innerHTML = files
+			  // res.end(`<html>
+			  //  <body>` + files + `
+			  //  </body>
+			  //  </html>`);
+
+        let allFormattedFiles = fileList();
 			  res.end(`<html>
-			   <body>` + files + `
+			   <body>` + allFormattedFiles + `
 			   </body>
 			   </html>`);
-
 				console.log(msg); // this is to show in the server console.
 			}
 			else {

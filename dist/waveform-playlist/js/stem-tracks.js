@@ -42,5 +42,7 @@ playlist
   });
 
 function testing(){
-  document.getElementById("playlist").innerHTML = "poop";
+  // document.getElementById("playlist").innerHTML = "poop";
+  playlist.clear();
+  playlist.load([{src:"media/audio/Weezer/disaster/01 Invincible.mp3", name: "invincible"}]);
 }

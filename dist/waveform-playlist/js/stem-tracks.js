@@ -40,3 +40,7 @@ playlist
   .then(function () {
     //can do stuff with the playlist.
   });
+
+function testing(){
+  document.getElementById("playlist").innerHTML = "poop";
+}

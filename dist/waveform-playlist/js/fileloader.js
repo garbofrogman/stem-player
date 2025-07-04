@@ -13,7 +13,7 @@ var http = require('http');
 
 http.createServer( function(req, res) {
   if (req.method == 'POST') {
-		if(msg === 'button=1') {
+		if(req.msg === 'button=1') {
 			res.writeHead(200, {'Content-Type': 'text/html'});
 			// res.end(printTracks());	// this is for the web page.
       // document.getElementById('tracklist').innerHTML = files
@@ -30,9 +30,14 @@ http.createServer( function(req, res) {
   }
 }).listen(8081);
 
-function test() {
-  return 'hello woild';
+module.exports = {
+
+  test: function test() {
+    return 'hello woild';
+  }
 }
+
+
 
 function printTracks() {
   var allfiles = '';

@@ -12,32 +12,41 @@ fs.readdir('../media/audio/Weezer/', (err, files) => {
 var http = require('http');
 
 http.createServer( function(req, res) {
-  if (req.method == 'POST') {
-		if(req.msg === 'button=1') {
+    if (req.method == 'POST') {
+		var msg = '';
+        req.on('data', function (data) {
+            msg += data;
+        });
+        req.on('end', function () {
+			if(msg === 'button=1') {
+				res.writeHead(200, {'Content-Type': 'text/html'});
+				// res.end(printTracks());	// this is for the web page.
+        // document.getElementById('tracklist').innerHTML = files
+			  res.end(`<html>
+			   <body>` + files + `
+			   </body>
+			   </html>`);
+
+				console.log(msg); // this is to show in the server console.
+			}
+			else {
+				res.writeHead(400, {'Content-Type': 'text/html'});
+				res.end('unexpected message (POST request) received: ' + msg);					
+			}
+        });
+    } else {
 			res.writeHead(200, {'Content-Type': 'text/html'});
-			// res.end(printTracks());	// this is for the web page.
-      // document.getElementById('tracklist').innerHTML = files
-		  res.end(`<html>
-		   <body>` + files + `
-		   </body>
-		   </html>`);
-			console.log(msg); // this is to show in the server console.
-		}
-		else {
-			res.writeHead(400, {'Content-Type': 'text/html'});
-			res.end('unexpected message (POST request) received: ' + msg);					
-		}
-  }
+			res.end(`<html>
+			<body>
+				As you requested, you should start with your static HTML file instead of browsing the URL directly.
+			</body>
+			</html>`);
+	}
 }).listen(8081);
 
-module.exports = {
-
-  test: function test() {
-    return 'hello woild';
-  }
+function test() {
+  return 'hello woild';
 }
-
-
 
 function printTracks() {
   var allfiles = '';

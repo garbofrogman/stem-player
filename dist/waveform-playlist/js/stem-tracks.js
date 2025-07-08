@@ -41,8 +41,18 @@ playlist
     //can do stuff with the playlist.
   });
 
-function testing(){
-  // document.getElementById("playlist").innerHTML = "poop";
-  playlist.clear();
-  playlist.load([{src:"media/audio/Weezer/disaster/01 Invincible.mp3", name: "invincible"}]);
+async function testing() {
+  console.log("testing() function");
+  // let files = await fetch("http://localhost:8081");
+  const response = await fetch('http://localhost:8081', {
+    method: 'POST',
+    });
+  console.log(response);
 }
+
+
+// function testing(){
+//   // document.getElementById("playlist").innerHTML = "poop";
+//   playlist.clear();
+//   playlist.load([{src:"media/audio/Weezer/disaster/01 Invincible.mp3", name: "invincible"}]);
+// }

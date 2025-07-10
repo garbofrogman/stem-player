@@ -44,7 +44,8 @@ playlist
 async function testing() {
   console.log("testing() function");
   // let files = await fetch("http://localhost:8081");
-  const response = await fetch('http://localhost:3000/tracks')
+  const response = await fetch('http://localhost:3000/tracks').then(res => res.json());
+  document.getElementById("tracklist").innerText = response.track0;
   console.log(response);
 }
 

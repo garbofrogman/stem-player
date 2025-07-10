@@ -1,82 +1,82 @@
-const fs = require('fs');
-let files = fs.readdirSync('../media/audio/Weezer/');
+const express = require('express');
+const app = express();
+const port = 3000;
 
-fs.readdir('../media/audio/Weezer/', (err, files) => {
-  if (err) {
-    console.error(err);
-    return;
-  }
-  // Do something with the files
+app.use(express.json());
+
+app.get('/users', (req, res) => {
+    res.json({ message: 'Returning list of users' });
 });
 
-var http = require('http');
+app.post('/users', (req, res) => {
+    const newUser = req.body;
+    res.json({ message: 'User created', user: newUser });
+});
 
-let formattedFiles = "";
-function fileList(){
-  files.forEach(element => {
-    formattedFiles += element;
-    formattedFiles += "<br>"
-  });
-  return formattedFiles;
-}
+app.put('/users/:id', (req, res) => {
+    const userId = req.params.id;
+    const updatedUser = req.body;
+    res.json({ message: `User with ID ${userId} updated`, updatedUser });
+});
 
-http.createServer (function(req, res){
-  if (req.method == 'POST') {
-    console.log('got data');
-    req.on('end', function () {
-      res.end('returned this from the server')
-    })
-  }
-}).listen(8081);
+app.delete('/users/:id', (req, res) => {
+    const userId = req.params.id;
+    res.json({ message: `User with ID ${userId} deleted` });
+});
 
-// http.createServer( function(req, res) {
-//     if (req.method == 'POST') {
-// 		var msg = '';
-//         req.on('data', function (data) {
-//             msg += data;
-//         });
-//         req.on('end', function () {
-// 			if(msg === 'button=1') {
-// 				res.writeHead(200, {'Content-Type': 'text/html'});
-// 			  // res.end(`<html>
-// 			  //  <body>` + files + `
-// 			  //  </body>
-// 			  //  </html>`);
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});
 //
-//         let allFormattedFiles = fileList();
-// 			  res.end(`<html>
-// 			   <body>` + allFormattedFiles + `
-// 			   </body>
-// 			   </html>`);
-// 				console.log(msg); // this is to show in the server console.
-// 			}
-// 			else {
-// 				res.writeHead(400, {'Content-Type': 'text/html'});
-// 				res.end('unexpected message (POST request) received: ' + msg);					
-// 			}
-//         });
-//     } else {
-// 			res.writeHead(200, {'Content-Type': 'text/html'});
-// 			res.end(`<html>
-// 			<body>
-// 				As you requested, you should start with your static HTML file instead of browsing the URL directly.
-// 			</body>
-// 			</html>`);
-// 	}
-// }).listen(8081);
-
-function test() {
-  return 'hello woild';
-}
-
-function printTracks() {
-  var allfiles = '';
-  let files = fs.readdirSync('../media/audio/Weezer/');
-  console.log("cliccicked");
-  files.forEach(file => {
-    console.log(file);
-    // return '<!DOCTYPE html> <html><body> ' + allfiles + '</body></html>';
-
-    return allfiles
-  });
-}
+// const express = require('express');
+// const app = express();
+// const port = 3000;
+//
+// app.use(express.json());
+//
+// const fs = require('fs');
+// let files = fs.readdirSync('../media/audio/Weezer/');
+//
+// let track_list = await get_tracks();
+// async function get_tracks() {
+//   let tracks = {};
+//   fs.readdir('../media/audio/Weezer/', (err, files) => {
+//     if (err) {
+//       console.error(err);
+//       return;
+//     }
+//     let count = 0;
+//     files.forEach(file => {
+//       let n_track = "track" + count;
+//       track_list[n_track] = file.name;
+//       count++;
+//     })
+//   });
+//   return tracks;
+// };
+//
+//
+// app.get('/tracks', (req, res) => {
+//     // res.json({ message: 'Returning list of users' });
+//     res.json(track_list);
+// });
+//
+// app.post('/users', (req, res) => {
+//     const newUser = req.body;
+//     res.json({ message: 'User created', user: newUser });
+// });
+//
+// app.put('/users/:id', (req, res) => {
+//     const userId = req.params.id;
+//     const updatedUser = req.body;
+//     res.json({ message: `User with ID ${userId} updated`, updatedUser });
+// });
+//
+// app.delete('/users/:id', (req, res) => {
+//     const userId = req.params.id;
+//     res.json({ message: `User with ID ${userId} deleted` });
+// });
+//
+// app.listen(port, () => {
+//     console.log(`Server is running on http://localhost:${port}`);
+// });

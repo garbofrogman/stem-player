@@ -1,8 +1,10 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+const cors = require('cors');
 
 app.use(express.json());
+app.use(cors());
 
 const fs = require('fs');
 let files = fs.readdirSync('../media/audio/Weezer/');
@@ -18,18 +20,15 @@ function get_tracks() {
     let count = 0;
     files.forEach(file => {
       let n_track = "track" + count;
-      console.log(file);
       tracks[n_track] = file;
       count++;
     })
   });
   return tracks;
-  console.log(tracks);
 };
 
 app.get('/tracks', (req, res) => {
-  get_tracks();
-    res.json(track_list);
+  res.json(track_list);
 });
 //
 // app.post('/users', (req, res) => {

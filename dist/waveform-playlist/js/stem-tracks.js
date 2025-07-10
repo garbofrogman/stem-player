@@ -44,9 +44,7 @@ playlist
 async function testing() {
   console.log("testing() function");
   // let files = await fetch("http://localhost:8081");
-  const response = await fetch('http://localhost:8081', {
-    method: 'POST',
-    });
+  const response = await fetch('http://localhost:3000/tracks')
   console.log(response);
 }
 

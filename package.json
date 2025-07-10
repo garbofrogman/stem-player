@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.27.6",
+    "cors": "^2.8.5",
     "event-emitter": "^0.3.5",
     "fade-curves": "^1.0.2",
     "fade-maker": "^1.0.3",

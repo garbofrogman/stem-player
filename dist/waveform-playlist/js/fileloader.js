@@ -25,17 +25,26 @@ function get_tracks() {
       let n_track = "track" + count;
       tracks[n_track] = music_dir + file;
       count++;
-      file_constructor(path);
+      plist_constructor(path);
       // console.log(path);
     })
   });
   return tracks;
 };
 
+function generate_links() {
+  let links = '';
+  files.forEach (function(dir) {
+    let trackdir = music_dir + dir;
+    links += '<a href onclick="plist_constructor(' + trackdir + ')">' + dir + '</a><br>';
+  })
+  return links;
+}
+
 // path eg '../media/audio/Stems/4 Non Blondes - What's Up (Official Music Video)-6NXnxTNIWkc/'
 // return [{src : '../media/audio/Stems/4 non..bass.', name: bass}, {src: '../media/audio/Stems/4 non..drums...', name: 'drums'}]
 // [{src:"4 non blondes - what's up (officia...", name: "what's up (of..."}, "", name: "invincible"]
-function file_constructor(dir_path) {
+function plist_constructor(dir_path) {
   let track_stems = fs.readdirSync(dir_path);
   // let name = dir_path.split('/').findLast();
   let stems = [];
@@ -53,6 +62,11 @@ function file_constructor(dir_path) {
 app.get('/tracks', (req, res) => {
   res.json(track_list);
 });
+
+app.get('/tracklist', (req, res) => {
+  res.send(generate_links());
+});
+
 //
 // app.post('/users', (req, res) => {
 //     const newUser = req.body;

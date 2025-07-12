@@ -48,6 +48,10 @@ async function testing() {
   console.log(response);
 }
 
+function load_track(track_path){
+  playlist.clear();
+  playlist.load()
+}
 
 // function testing(){
 //   // document.getElementById("playlist").innerHTML = "poop";

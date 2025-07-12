@@ -17,29 +17,21 @@ var playlist = WaveformPlaylist.init({
   zoomLevels: [500, 1000, 3000, 5000],
 });
 
-var Vocals30 = "media/audio/Vocals30.mp3"
 playlist
   .load([
     {
-      src: Vocals30,
-      name: "Vocals",
-    },
-    {
-      src: "media/audio/Guitar30.mp3",
-      name: "Guitar",
-    },
-    {
-      src: "media/audio/PianoSynth30.mp3",
-      name: "Pianos & Synth",
-    },
-    {
-      src: "media/audio/BassDrums30.mp3",
-      name: "Drums",
+      src: "media/audio/Stems/Ok Go - Oh No/01 Invincible.mp3",
+      name: "invincible",
     },
   ])
   .then(function () {
     //can do stuff with the playlist.
   });
+
+async function get_track_links(){
+  const response = await fetch('http://localhost:3000/tracklist').then(res => res.text());
+  document.getElementById("tracklist").innerHTML = response;
+}
 
 async function testing() {
   console.log("testing() function");
@@ -48,10 +40,10 @@ async function testing() {
   console.log(response);
 }
 
-function load_track(track_path){
-  playlist.clear();
-  playlist.load()
-}
+// function load_track(track_dir){
+//   playlist.clear();
+//   playlist.load()
+// }
 
 // function testing(){
 //   // document.getElementById("playlist").innerHTML = "poop";

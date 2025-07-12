@@ -25,8 +25,6 @@ function get_tracks() {
       let n_track = "track" + count;
       tracks[n_track] = music_dir + file;
       count++;
-      plist_constructor(path);
-      // console.log(path);
     })
   });
   return tracks;
@@ -64,7 +62,8 @@ app.get('/tracks', (req, res) => {
 });
 
 app.get('/tracklist', (req, res) => {
-  res.send(generate_links());
+  let data = generate_links()
+  res.send(data);
 });
 
 //

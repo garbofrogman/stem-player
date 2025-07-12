@@ -7,25 +7,46 @@ app.use(express.json());
 app.use(cors());
 
 const fs = require('fs');
-let files = fs.readdirSync('../media/audio/Weezer/');
+
+let music_dir = '../media/audio/Stems/'
+let files = fs.readdirSync(music_dir);
 
 let track_list = get_tracks();
 function get_tracks() {
   let tracks = {};
-  fs.readdir('../media/audio/Weezer/', (err, files) => {
+  fs.readdir(music_dir , (err, files) => {
     if (err) {
       console.error(err);
       return;
     }
     let count = 0;
     files.forEach(file => {
+      let path = music_dir + file;
       let n_track = "track" + count;
-      tracks[n_track] = file;
+      tracks[n_track] = music_dir + file;
       count++;
+      file_constructor(path);
+      // console.log(path);
     })
   });
   return tracks;
 };
+
+// path eg '../media/audio/Stems/4 Non Blondes - What's Up (Official Music Video)-6NXnxTNIWkc/'
+// return [{src : '../media/audio/Stems/4 non..bass.', name: bass}, {src: '../media/audio/Stems/4 non..drums...', name: 'drums'}]
+// [{src:"4 non blondes - what's up (officia...", name: "what's up (of..."}, "", name: "invincible"]
+function file_constructor(dir_path) {
+  let track_stems = fs.readdirSync(dir_path);
+  // let name = dir_path.split('/').findLast();
+  let stems = [];
+  // for (const file of track_stems){
+  track_stems.forEach (function(stem) {
+    // if (! file.split('.').findLast() == 'mp3'){
+    // }
+    stems.push(stem);
+  })
+  console.log(stems);
+}
 
 app.get('/tracks', (req, res) => {
   res.json(track_list);

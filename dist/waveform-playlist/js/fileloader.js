@@ -41,9 +41,11 @@ function file_constructor(dir_path) {
   let stems = [];
   // for (const file of track_stems){
   track_stems.forEach (function(stem) {
+    stem_path = dir_path + '/' + stem;
+    stem_obj = {src: stem_path , name: stem}
     // if (! file.split('.').findLast() == 'mp3'){
     // }
-    stems.push(stem);
+    stems.push(stem_obj);
   })
   console.log(stems);
 }

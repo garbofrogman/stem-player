@@ -8,9 +8,9 @@ app.use(cors());
 
 const fs = require('fs');
 
-let music_dir = '../media/audio/Stems/'
+let music_dir = "../media/audio/Stems/"
 let files = fs.readdirSync(music_dir);
-let rel_path = music_dir.replace('../', '');
+let rel_path = music_dir.replace("../", "");
 
 let track_list = get_tracks();
 function get_tracks() {
@@ -20,21 +20,26 @@ function get_tracks() {
       console.error(err);
       return;
     }
-    let count = 0;
-    files.forEach(file => {
-      let path = music_dir + file;
-      let n_track = "track" + count;
-      tracks[n_track] = music_dir + file;
-      count++;
-    })
   });
+    let count = 0;
+    files.forEach( function(track_dir){
+      let path = music_dir + track_dir;
+      let n_track = "track" + count;
+      let track_title = track_dir.replace(/[^a-zA-Z ]/g, "");
+      let track_stems = stems_constructor(music_dir + track_dir);
+      // tracks[n_track] = track_stems;
+      tracks[track_title] = track_stems;
+      count++;
+    });
   return tracks;
 };
 
 function generate_links() {
-  let links = '';
+  let links = "";
+  let test = "testing";
   files.forEach (function(track_name) {
-    links += '<button type="button" onclick="load_stems(\'' + rel_path + track_name + '\')">' + track_name + '</button><br>';
+    // links += '<button type="button" onclick="load_stems(\'' + rel_path + track_name + '\')">' + track_name + '</button><br>';
+    links += '<button type="button" onclick="load_stems(\'' + test + '\')">' + track_name + '</button><br>';
   })
   console.log(links);
   return links;
@@ -43,19 +48,19 @@ function generate_links() {
 // path eg '../media/audio/Stems/4 Non Blondes - What's Up (Official Music Video)-6NXnxTNIWkc/'
 // return [{src : '../media/audio/Stems/4 non..bass.', name: bass}, {src: '../media/audio/Stems/4 non..drums...', name: 'drums'}]
 // [{src:"4 non blondes - what's up (officia...", name: "what's up (of..."}, "", name: "invincible"]
-function plist_constructor(dir_path) {
-  let track_stems = fs.readdirSync(dir_path);
-  // let name = dir_path.split('/').findLast();
+function stems_constructor(track_path) {
+  let track_stems = fs.readdirSync(track_path);
   let stems = [];
   // for (const file of track_stems){
   track_stems.forEach (function(stem) {
-    stem_path = dir_path + '/' + stem;
+    stem_path = track_path + "/" + stem;
     stem_obj = {src: stem_path , name: stem}
     // if (! file.split('.').findLast() == 'mp3'){
     // }
     stems.push(stem_obj);
   })
   console.log(stems);
+  return stems;
 }
 
 app.get('/tracks', (req, res) => {

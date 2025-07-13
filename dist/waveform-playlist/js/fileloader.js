@@ -13,6 +13,7 @@ let files = fs.readdirSync(music_dir);
 let rel_path = music_dir.replace("../", "");
 
 let track_list = get_tracks();
+
 function get_tracks() {
   let tracks = {};
   fs.readdir(music_dir , (err, files) => {
@@ -25,9 +26,8 @@ function get_tracks() {
     files.forEach( function(track_dir){
       let path = music_dir + track_dir;
       let n_track = "track" + count;
-      let track_title = track_dir.replace(/[^a-zA-Z ]/g, "");
-      let track_stems = stems_constructor(music_dir + track_dir);
-      // tracks[n_track] = track_stems;
+      let track_title = track_dir.replace(/[^a-zA-Z0-9 ]/g, "");
+      let track_stems = stems_constructor( music_dir + track_dir );
       tracks[track_title] = track_stems;
       count++;
     });
@@ -36,11 +36,10 @@ function get_tracks() {
 
 function generate_links() {
   let links = "";
-  let test = "testing";
-  files.forEach (function(track_name) {
-    // links += '<button type="button" onclick="load_stems(\'' + rel_path + track_name + '\')">' + track_name + '</button><br>';
-    links += '<button type="button" onclick="load_stems(\'' + test + '\')">' + track_name + '</button><br>';
-  })
+  for (const [track_title, stems] of Object.entries(track_list)) {
+    // links += '<button type="button" onclick="load_stems(\'' + key + '\')">' + key + '</button><br>';
+    links += "<button type='button' onclick='load_stems(\"" + track_title + "\")'>" + track_title + "</button><br>";
+  };
   console.log(links);
   return links;
 }
@@ -51,15 +50,14 @@ function generate_links() {
 function stems_constructor(track_path) {
   let track_stems = fs.readdirSync(track_path);
   let stems = [];
-  // for (const file of track_stems){
   track_stems.forEach (function(stem) {
-    stem_path = track_path + "/" + stem;
+    stem_path = rel_path + "/" + stem;
     stem_obj = {src: stem_path , name: stem}
     // if (! file.split('.').findLast() == 'mp3'){
     // }
     stems.push(stem_obj);
   })
-  console.log(stems);
+  // console.log(stems);
   return stems;
 }
 

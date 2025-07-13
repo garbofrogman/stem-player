@@ -28,7 +28,7 @@ playlist
 let track_info;
 
 async function get_track_links(){
-  const response = await fetch('http://localhost:3000/tracklist').then(res => res.text());
+  const response = await fetch('http://localhost:3000/links').then(res => res.text());
   document.getElementById("tracklist").innerHTML = response;
 
   track_info = await fetch('http://localhost:3000/tracks').then(res => res.json());
@@ -36,20 +36,17 @@ async function get_track_links(){
 }
 
 function load_stems(track_name){
-  console.log(track_name);
+  playlist.clear();
+  playlist.load(track_info[track_name]);
+  console.log(track_info[track_name]);
   // track_info.forEach( function(stem){
   //   console.log(stem);
   // }
 }
 
-function placeholder(){
-
-}
-
 async function testing() {
-  console.log("testing() function");
-  const response = await fetch('http://localhost:3000/tracks').then(res => res.json());
-  document.getElementById("tracklist").innerText = response.track0;
+  playlist.clear();
+  playlist.load()
   console.log(response);
 }
 

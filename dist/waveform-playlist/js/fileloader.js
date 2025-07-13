@@ -26,13 +26,17 @@ function get_tracks() {
     files.forEach( function(track_dir){
       let path = music_dir + track_dir;
       let n_track = "track" + count;
-      let track_title = track_dir.replace(/[^a-zA-Z0-9 ]/g, "");
+      let track_title = get_track_title(track_dir);
       let track_stems = stems_constructor( music_dir + track_dir );
       tracks[track_title] = track_stems;
       count++;
     });
   return tracks;
 };
+
+function get_track_title(track_dir_name){
+  return track_dir_name.replace(/[^a-zA-Z0-9 ]/g, "");
+}
 
 function generate_links() {
   let links = "";
@@ -49,9 +53,11 @@ function generate_links() {
 // [{src:"4 non blondes - what's up (officia...", name: "what's up (of..."}, "", name: "invincible"]
 function stems_constructor(track_path) {
   let track_stems = fs.readdirSync(track_path);
+  let track_title = get_track_title(track_path);
+  let rel_track_path = track_path.replace("../", "");
   let stems = [];
   track_stems.forEach (function(stem) {
-    stem_path = rel_path + "/" + stem;
+    stem_path = rel_track_path + "/" + stem;
     stem_obj = {src: stem_path , name: stem}
     // if (! file.split('.').findLast() == 'mp3'){
     // }
@@ -65,7 +71,7 @@ app.get('/tracks', (req, res) => {
   res.json(track_list);
 });
 
-app.get('/tracklist', (req, res) => {
+app.get('/links', (req, res) => {
   let data = generate_links()
   res.send(data);
 });

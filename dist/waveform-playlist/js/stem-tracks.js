@@ -38,25 +38,4 @@ async function get_track_links(){
 function load_stems(track_name){
   playlist.clear();
   playlist.load(track_info[track_name]);
-  console.log(track_info[track_name]);
-  // track_info.forEach( function(stem){
-  //   console.log(stem);
-  // }
 }
-
-async function testing() {
-  playlist.clear();
-  playlist.load()
-  console.log(response);
-}
-
-// function load_track(track_dir){
-//   playlist.clear();
-//   playlist.load()
-// }
-
-// function testing(){
-//   // document.getElementById("playlist").innerHTML = "poop";
-//   playlist.clear();
-//   playlist.load([{src:"media/audio/Weezer/disaster/01 Invincible.mp3", name: "invincible"}]);
-// }

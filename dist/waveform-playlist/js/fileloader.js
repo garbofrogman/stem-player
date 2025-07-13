@@ -12,6 +12,8 @@ let music_dir = "../media/audio/Stems/"
 let files = fs.readdirSync(music_dir);
 let rel_path = music_dir.replace("../", "");
 
+let supported_filetypes = ["mp3", "wav", "ogg"];
+
 let track_list = get_tracks();
 
 function get_tracks() {
@@ -24,10 +26,10 @@ function get_tracks() {
   });
     let count = 0;
     files.forEach( function(track_dir){
-      let path = music_dir + track_dir;
+      let track_path = music_dir + track_dir;
       let n_track = "track" + count;
       let track_title = get_track_title(track_dir);
-      let track_stems = stems_constructor( music_dir + track_dir );
+      let track_stems = stems_constructor( track_path );
       tracks[track_title] = track_stems;
       count++;
     });
@@ -41,31 +43,26 @@ function get_track_title(track_dir_name){
 function generate_links() {
   let links = "";
   for (const [track_title, stems] of Object.entries(track_list)) {
-    // links += '<button type="button" onclick="load_stems(\'' + key + '\')">' + key + '</button><br>';
     links += "<button type='button' onclick='load_stems(\"" + track_title + "\")'>" + track_title + "</button><br>";
   };
   console.log(links);
   return links;
 }
 
-// path eg '../media/audio/Stems/4 Non Blondes - What's Up (Official Music Video)-6NXnxTNIWkc/'
-// return [{src : '../media/audio/Stems/4 non..bass.', name: bass}, {src: '../media/audio/Stems/4 non..drums...', name: 'drums'}]
-// [{src:"4 non blondes - what's up (officia...", name: "what's up (of..."}, "", name: "invincible"]
 function stems_constructor(track_path) {
   let track_stems = fs.readdirSync(track_path);
   let track_title = get_track_title(track_path);
   let rel_track_path = track_path.replace("../", "");
   let stems = [];
   track_stems.forEach (function(stem) {
-    stem_path = rel_track_path + "/" + stem;
-    stem_obj = {src: stem_path , name: stem}
-    // if (! file.split('.').findLast() == 'mp3'){
-    // }
-    stems.push(stem_obj);
+    if (supported_filetypes.includes(stem.split('.').at(-1))){
+      stem_path = rel_track_path + "/" + stem;
+      stem_obj = {src: stem_path , name: stem}
+      stems.push(stem_obj);
+    };
   })
-  // console.log(stems);
   return stems;
-}
+};
 
 app.get('/tracks', (req, res) => {
   res.json(track_list);
@@ -76,7 +73,10 @@ app.get('/links', (req, res) => {
   res.send(data);
 });
 
-//
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});
+
 // app.post('/users', (req, res) => {
 //     const newUser = req.body;
 //     res.json({ message: 'User created', user: newUser });
@@ -93,6 +93,3 @@ app.get('/links', (req, res) => {
 //     res.json({ message: `User with ID ${userId} deleted` });
 // });
 
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
-});

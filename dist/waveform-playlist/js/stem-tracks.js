@@ -1,15 +1,20 @@
 var playlist = WaveformPlaylist.init({
   samplesPerPixel: 1000,
   waveHeight: 100,
+  barWidth: 1,
+  barGap: 0,
   container: document.getElementById("playlist"),
   timescale: true,
-  state: "cursor",
+  state: "select",
   colors: {
     waveOutlineColor: "#005BBB",
   },
   controls: {
     show: true, //whether or not to include the track controls
     width: 200, //width of controls in pixels
+    widgets: {
+      stereoPan: false,
+    },
   },
   zoomLevels: [500, 1000, 3000, 5000],
 });
@@ -26,7 +31,6 @@ playlist
   });
 
 let track_info;
-
 async function get_track_links(){
   const response = await fetch('http://localhost:3000/links').then(res => res.text());
   document.getElementById("tracklist").innerHTML = response;
@@ -38,4 +42,5 @@ async function get_track_links(){
 function load_stems(track_name){
   playlist.clear();
   playlist.load(track_info[track_name]);
+  return false;
 }

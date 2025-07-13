@@ -10,6 +10,7 @@ const fs = require('fs');
 
 let music_dir = '../media/audio/Stems/'
 let files = fs.readdirSync(music_dir);
+let rel_path = music_dir.replace('../', '');
 
 let track_list = get_tracks();
 function get_tracks() {
@@ -32,10 +33,10 @@ function get_tracks() {
 
 function generate_links() {
   let links = '';
-  files.forEach (function(dir) {
-    let trackdir = music_dir + dir;
-    links += '<a href onclick="plist_constructor(' + trackdir + ')">' + dir + '</a><br>';
+  files.forEach (function(track_name) {
+    links += '<button type="button" onclick="load_stems(\'' + rel_path + track_name + '\')">' + track_name + '</button><br>';
   })
+  console.log(links);
   return links;
 }
 

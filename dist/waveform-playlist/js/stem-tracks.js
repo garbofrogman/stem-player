@@ -1,6 +1,3 @@
-function get_tracks(){
-   
-}
 var playlist = WaveformPlaylist.init({
   samplesPerPixel: 1000,
   waveHeight: 100,
@@ -28,9 +25,20 @@ playlist
     //can do stuff with the playlist.
   });
 
+let track_info;
+
 async function get_track_links(){
   const response = await fetch('http://localhost:3000/tracklist').then(res => res.text());
   document.getElementById("tracklist").innerHTML = response;
+
+  track_info = await fetch('http://localhost:3000/tracks').then(res => res.json());
+}
+
+function load_stems(track_name){
+  console.log(track_name);
+  // track_info.forEach( function(stem){
+  //   console.log(stem);
+  // }
 }
 
 async function testing() {

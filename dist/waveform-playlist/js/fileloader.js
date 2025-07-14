@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 3000; // TODO - check if port is in use
 const cors = require('cors');
 
 app.use(express.json());
@@ -26,11 +26,13 @@ function get_tracks() {
   });
     let count = 0;
     files.forEach( function(track_dir){
-      let track_path = music_dir + track_dir;
-      let n_track = "track" + count;
-      let track_title = get_track_title(track_dir);
-      let track_stems = stems_constructor( track_path );
-      tracks[track_title] = track_stems;
+      if (fs.statSync(music_dir + track_dir).isDirectory()){
+        let track_path = music_dir + track_dir;
+        let n_track = "track" + count;
+        let track_title = get_track_title(track_dir);
+        let track_stems = stems_constructor( track_path );
+        tracks[track_title] = track_stems;
+      }
       count++;
     });
   return tracks;

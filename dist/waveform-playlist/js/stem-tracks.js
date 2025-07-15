@@ -42,5 +42,6 @@ async function get_track_links(){
 function load_stems(track_name){
   playlist.clear();
   playlist.load(track_info[track_name]);
+  document.getElementById("track-name").innerText = track_name;
   return false;
 }

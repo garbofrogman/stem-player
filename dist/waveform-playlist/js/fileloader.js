@@ -45,7 +45,7 @@ function get_track_title(track_dir_name){
 function generate_links() {
   let links = "";
   for (const [track_title, stems] of Object.entries(track_list)) {
-    links += "<button type='button' onclick='load_stems(\"" + track_title + "\")'>" + track_title + "</button><br>";
+    links += "<a href='#playlist' onclick='load_stems(\"" + track_title + "\")'>" + track_title + "</a><br>";
   };
   return links;
 }

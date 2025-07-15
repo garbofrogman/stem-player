@@ -289,8 +289,13 @@ function displaySoundStatus(status) {
 }
 
 function displayLoadingData(data) {
+  // var info = $("<div/>").append(data);
+  $(".loading-data").text(data);
+}
+
+function displayLoadingPct(data, src) {
   var info = $("<div/>").append(data);
-  $(".loading-data").append(info);
+  $(".loading-data").text(src + ": " + data + "%");
 }
 
 function displayDownloadLink(link) {
@@ -334,35 +339,35 @@ ee.on("mastervolumechange", function(volume) {
 var audioStates = ["uninitialized", "loading", "decoding", "finished"];
 
 ee.on("audiorequeststatechange", function(state, src) {
-  var name = src;
+  var name = src.split("/").at(-1);
 
   if (src instanceof File) {
     name = src.name;
   }
 
-  displayLoadingData("Track " + name + " is in state " + audioStates[state]);
+  displayLoadingData(name + " is " + audioStates[state]);
 });
 
 ee.on("loadprogress", function(percent, src) {
-  var name = src;
+  var name = src.split("/").at(-1);
 
   if (src instanceof File) {
     name = src.name;
   }
 
-  displayLoadingData("Track " + name + " has loaded " + percent + "%");
+  displayLoadingPct(percent, name);
 });
 
 ee.on("audiosourcesloaded", function() {
-  displayLoadingData("Tracks have all finished decoding.");
+  displayLoadingData("All tracks loaded. Rendering...");
 });
 
 ee.on("audiosourcesrendered", function() {
-  displayLoadingData("Tracks have been rendered");
+  displayLoadingData("");
 });
 
 ee.on("audiosourceserror", function(e) {
-  displayLoadingData(e.message);
+  // displayLoadingData(e.message);
 });
 
 ee.on('audiorenderingfinished', function (type, data) {

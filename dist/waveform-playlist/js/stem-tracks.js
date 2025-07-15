@@ -36,7 +36,6 @@ async function get_track_links(){
   document.getElementById("tracklist").innerHTML = response;
 
   track_info = await fetch('http://localhost:3000/tracks').then(res => res.json());
-  console.log(track_info);
 }
 
 function load_stems(track_name){
@@ -45,3 +44,4 @@ function load_stems(track_name){
   document.getElementById("track-name").innerText = track_name;
   return false;
 }
+

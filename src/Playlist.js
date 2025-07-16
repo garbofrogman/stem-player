@@ -795,7 +795,7 @@ export default class {
     }
 
     this.pausedAt = undefined;
-    this.playbackSeconds = 0;
+    this.playbackSeconds = this.cursor;
     return this.playbackReset();
   }
 

@@ -6,6 +6,7 @@ var playlist = WaveformPlaylist.init({
   container: document.getElementById("playlist"),
   timescale: true,
   state: "select",
+  isAutomaticScroll: true,
   colors: {
     waveOutlineColor: "#005BBB",
   },

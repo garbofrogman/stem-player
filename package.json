@@ -1,11 +1,10 @@
 {
-  "name": "waveform-playlist",
-  "description": "Multiple track web audio editor and player with waveform preview",
-  "version": "4.3.3",
+  "name": "Stem Player",
+  "description": "Easily load stem tracks to play along to.",
+  "version": "0.0.8",
   "main": "build/waveform-playlist.umd.js",
-  "author": "Naomi Aro",
+  "author": "garbofrogman, Naomi Aro",
   "license": "MIT",
-  "website": "http://naomiaro.github.io",
   "devDependencies": {
     "@babel/cli": "^7.27.2",
     "@babel/core": "^7.27.4",
@@ -63,7 +62,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/naomiaro/waveform-playlist.git"
+    "url": "git+https://github.com/garbofrogman/stem-player"
   },
   "keywords": [
     "waveform",
@@ -78,10 +77,8 @@
     "record",
     "recording",
     "player",
-    "webaudio"
+    "webaudio",
+    "music"
   ],
-  "bugs": {
-    "url": "https://github.com/naomiaro/waveform-playlist/issues"
-  },
-  "homepage": "http://naomiaro.github.io/waveform-playlist"
+  "homepage": "https://github.com/garbofrogman/stem-player"
 }

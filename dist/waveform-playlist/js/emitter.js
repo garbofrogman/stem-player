@@ -129,7 +129,7 @@ $container.on("click", ".btn-play", function() {
 });
 
 $container.on("click", ".btn-pause", function() {
-  isLooping = false;
+  // isLooping = false;
   ee.emit("pause");
 });
 
@@ -310,7 +310,6 @@ function displayDownloadLink(link) {
   $('.btn-download-link').remove();
   $('.btn-download').after($link);
 }
-
 
 /*
 * Code below receives updates from the playlist.

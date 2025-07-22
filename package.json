@@ -56,7 +56,7 @@
     "compile": "babel src --out-dir lib",
     "webpack:unpkg": "webpack --config webpack.config.unpkg.js",
     "webpack:server": "webpack serve --static dist/ --color --host 0.0.0.0 --config webpack.config.dev.js",
-    "start": "npm run webpack:server",
+    "start": "npm run webpack:server & cd dist/waveform-playlist/js && node fileserver.js",
     "dev": "npm run jekyll:dev && npm run jekyll:scss && npm run webpack:server",
     "website": "npm run build && npm run ghpages"
   },

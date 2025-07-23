@@ -1,7 +1,8 @@
-FROM node:24
+FROM node:24-alpine
 
 WORKDIR /usr/src/app
 
+RUN apk add npm
 # COPY package*.json ./
 COPY . .
 

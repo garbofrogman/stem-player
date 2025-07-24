@@ -25,7 +25,7 @@
   <script src="https://kit.fontawesome.com/ef69927139.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body style="height:100vh">
   <header class="site-header">
     <ol class="breadcrumb">
       <li><a href="/waveform-playlist/">Waveform Playlist</a></li>
@@ -34,7 +34,7 @@
   </header>
 
 
-  <main class="container" title="demo">
+  <main class="container" title="demo" style="height:100%; overflow-y:scroll;">
     <div class="wrapper">
       <article class="post">
         <header class="post-header">
@@ -92,7 +92,7 @@
       <input type="text" class="audio-end form-control mr-sm-2" id="audio_end">
       <span class="audio-pos" aria-label="Audio position">00:00:00.0</span>
     </form>
-    <div id="tracklist"></div>
+    <div id="tracklist" style="overflow-y:scroll; max-height:50%"></div>
     <form>
       <button type="button" onclick="get_track_links()">List tracks</button>
     </form>

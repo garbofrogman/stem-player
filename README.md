@@ -1,8 +1,6 @@
 # Stem Player
 Quick and easy way to load stems to play along to.
-
 ## Browser Support
-
 Stem Player requires webaudio in the browser to function correctly: [Can I Use?](http://caniuse.com/#search=webaudio)
 ## Installation
 ### Docker
@@ -20,4 +18,5 @@ services:
     volumes:
       - /path/to/your/stems:/usr/src/app/dist/waveform-playlist/media/audio/Stems
 ```
+
 [MIT License](http://doge.mit-license.org)

@@ -20,18 +20,14 @@ var playlist = WaveformPlaylist.init({
   zoomLevels: [500, 1000, 3000, 5000],
 });
 
-playlist
-  .load([
-    {
-      src: "media/audio/Stems/Ok Go - Oh No/01 Invincible.mp3",
-      name: "invincible",
-    },
-  ])
-  .then(function () {
-    //can do stuff with the playlist.
-  });
-
+let stem_state = {
+  "drums" : {
+      "muted" : false,
+  },
+}
 let track_info;
+var ee = playlist.getEventEmitter();
+
 async function get_track_links(){
   const response = await fetch('http://localhost:3000/links').then(res => res.text());
   document.getElementById("tracklist").innerHTML = response;
@@ -41,8 +37,17 @@ async function get_track_links(){
 
 function load_stems(track_name){
   playlist.clear();
+  track_info[track_name].forEach(function(stem) {
+    if (stem["name"].includes("drum")) {
+      stem["muted"] = stem_state["drums"]["muted"];
+    }
+  });
   playlist.load(track_info[track_name]);
   document.getElementById("track-name").innerText = track_name;
   return false;
 }
 
+ee.on("mute", function(stem) {
+  stem_state[stem["name"]]["muted"] ^= true;
+  console.log(JSON.stringify(stem_state));
+});

@@ -55,10 +55,14 @@ function stems_constructor(track_path) {
   let track_title = get_track_title(track_path);
   let rel_track_path = track_path.replace("../", "");
   let stems = [];
+
   track_stems.forEach (function(stem) {
-    if (supported_filetypes.includes(stem.split('.').at(-1))){
+    let filetype = stem.split('.').at(-1)
+    let filename = stem.split('.').at(0)
+
+    if (supported_filetypes.includes(filetype)){
       stem_path = rel_track_path + "/" + stem;
-      stem_obj = {src: stem_path , name: stem}
+      stem_obj = {src: stem_path , name: filename}
       stems.push(stem_obj);
     };
   })

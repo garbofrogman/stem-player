@@ -24,7 +24,25 @@ let stem_state = {
   "drums" : {
       "muted" : false,
   },
-}
+  "bass" : {
+      "muted" : false,
+  },
+  "guitar" : {
+      "muted" : false,
+  },
+  "vocals" : {
+      "muted" : false,
+  },
+  "song" : {
+      "muted" : false,
+  },
+  "instrumental" : {
+      "muted" : true,
+  },
+  "other" : {
+      "muted" : true,
+  },
+ }
 let track_info;
 var ee = playlist.getEventEmitter();
 
@@ -38,9 +56,20 @@ async function get_track_links(){
 function load_stems(track_name){
   playlist.clear();
   track_info[track_name].forEach(function(stem) {
-    if (stem["name"].includes("drum")) {
-      stem["muted"] = stem_state["drums"]["muted"];
-    }
+    console.log(stem["name"]);
+    let s_name = stem["name"];
+    let s_type;
+    if (s_name in stem_state){
+      s_type = s_name;
+    } else {
+      switch(true) {
+        case s_name.includes("drum") : s_type = "drums"; break;
+        case s_name.includes("rhythm") : s_type = "bass"; break;
+        case s_name.includes("other") : s_type = "guitar"; break;
+        default: s_type = "other";
+      };
+    };
+    stem["muted"] = stem_state[s_type]["muted"];
   });
   playlist.load(track_info[track_name]);
   document.getElementById("track-name").innerText = track_name;
@@ -49,5 +78,4 @@ function load_stems(track_name){
 
 ee.on("mute", function(stem) {
   stem_state[stem["name"]]["muted"] ^= true;
-  console.log(JSON.stringify(stem_state));
 });

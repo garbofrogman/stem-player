@@ -47,10 +47,10 @@ let track_info;
 var ee = playlist.getEventEmitter();
 
 async function get_track_links(){
-  const response = await fetch('http://localhost:3000/links').then(res => res.text());
+  const response = await fetch('http://192.168.0.15:3009/links').then(res => res.text());
   document.getElementById("tracklist").innerHTML = response;
 
-  track_info = await fetch('http://localhost:3000/tracks').then(res => res.json());
+  track_info = await fetch('http://192.168.0.15:3009/tracks').then(res => res.json());
 }
 
 function load_stems(track_name){

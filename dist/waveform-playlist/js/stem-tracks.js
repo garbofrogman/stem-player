@@ -39,7 +39,7 @@ let stem_state = {
   "instrumental" : {
       "muted" : true,
   },
-  "other" : {
+  "misc" : {
       "muted" : true,
   },
  }
@@ -56,19 +56,7 @@ async function get_track_links(){
 function load_stems(track_name){
   playlist.clear();
   track_info[track_name].forEach(function(stem) {
-    console.log(stem["name"]);
-    let s_name = stem["name"];
-    let s_type;
-    if (s_name in stem_state){
-      s_type = s_name;
-    } else {
-      switch(true) {
-        case s_name.includes("drum") : s_type = "drums"; break;
-        case s_name.includes("rhythm") : s_type = "bass"; break;
-        case s_name.includes("other") : s_type = "guitar"; break;
-        default: s_type = "other";
-      };
-    };
+    let s_type = getStemType(stem["name"]);
     stem["muted"] = stem_state[s_type]["muted"];
   });
   playlist.load(track_info[track_name]);
@@ -76,6 +64,24 @@ function load_stems(track_name){
   return false;
 }
 
+function getStemType(s_name){
+  console.log(s_name);
+  if (s_name in stem_state){
+    return s_name;
+  } else {
+    let s_type;
+    switch(true) {
+      case s_name.includes("drum") : s_type = "drums"; break;
+      case s_name.includes("rhythm") : s_type = "bass"; break;
+      case s_name.includes("other") : s_type = "guitar"; break;
+      default: s_type = "misc";
+    };
+    return s_type;
+  };
+}
+
 ee.on("mute", function(stem) {
-  stem_state[stem["name"]]["muted"] ^= true;
+  console.log(stem["name"]);
+  let s_name = getStemType(stem["name"]);
+  stem_state[s_name]["muted"] ^= true;
 });

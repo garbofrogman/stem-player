@@ -1,7 +1,7 @@
 {
   "name": "Stem Player",
   "description": "Easily load stem tracks to play along to.",
-  "version": "0.1",
+  "version": "0.1.1",
   "main": "build/waveform-playlist.umd.js",
   "author": "garbofrogman, Naomi Aro",
   "license": "MIT",

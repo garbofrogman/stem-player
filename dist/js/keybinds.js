@@ -1,16 +1,18 @@
 window.onkeydown = function(e){
-  e.preventDefault();
   let key = e.key;
 
   switch(key){ 
     case " ":
+      e.preventDefault();
       if (e.getModifierState("Control")){
-        stop_mv_cursor();
+        // stop_mv_cursor();
+        playlist.setTimeSelection(playlist.playbackSeconds,playlist.playbackSeconds)
       } else {
-        toggle_play("stop");
+        toggle_play("pause");
       }
       break;
     case "l":
+      e.preventDefault();
       toggle_loop();
       break;
   }

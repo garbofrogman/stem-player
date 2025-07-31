@@ -6,8 +6,8 @@ module.exports = {
     "waveform-playlist": "./app.js",
   },
   output: {
-    path: __dirname + "/dist/waveform-playlist/js",
-    publicPath: "/waveform-playlist/js/",
+    path: __dirname + "/dist/js",
+    publicPath: "/js/",
     filename: "[name].js",
     library: {
       name: "WaveformPlaylist",

@@ -46,11 +46,12 @@ let stem_state = {
   },
  }
 let track_info;
+let lyrics;
 var ee = playlist.getEventEmitter();
 
 async function get_track_links(){
   const response = await fetch('http://localhost:3009/links').then(res => res.text());
-  document.getElementById("tracklist").innerHTML = response;
+  document.getElementById("bottom-half").innerHTML = response;
 
   track_info = await fetch('http://localhost:3009/tracks').then(res => res.json());
 }
@@ -62,6 +63,7 @@ function load_stems(track_name){
     stem["muted"] = stem_state[s_type]["muted"];
   });
   playlist.load(track_info[track_name]["stems"]);
+  lyrics = getLyrics(track_info[track_name]);
   document.getElementById("track-name").innerText = track_name;
   return false;
 }
@@ -82,7 +84,6 @@ function load_stems(track_name){
 // }
 
 function getStemType(s_name){
-  console.log(s_name);
   if (s_name in stem_state){
     return s_name;
   } else {
@@ -102,7 +103,15 @@ ee.on("mute", function(stem) {
   stem_state[s_name]["muted"] ^= true;
 });
 
-async function test(stem){
-  const response = await fetch(`https://lrclib.net/api/get?artist_name=Borislav+Slavov&track_name=I+Want+to+Live&album_name=Baldur%27s+Gate+3+(Original+Game+Soundtrack)&duration=233`).then(res => res.json());
+// function lyrics(t_obj) {
+//   document.getElementById("bottom-half").innerHTML = JSON.stringify(track_info);
+// }
+
+async function getLyrics(t_obj){
+  const title = t_obj["title"].replace(" ", "+");
+  const artist = t_obj["artist"].replace(" ", "+");
+  const album = t_obj["album"].replace(" ", "+");
+  const length = t_obj["length"]
+  const response = await fetch(`https://lrclib.net/api/get?artist_name=${artist}&track_name=${title}&album_name=${album}&duration=${length}`).then(res => res.json());
   console.log(JSON.stringify(response));
 }

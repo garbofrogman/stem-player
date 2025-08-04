@@ -52,7 +52,7 @@
           </div>
         </div>
     </div>
-    <div id="playlist"></div>
+    <div id="playlist" style="overflow-y:scroll; max-height:50%"></div>
     <div class="loading-data"></div>
     <form class="form-inline">
       <label for="master-gain" class="mr-sm-2">Master Volume</label>
@@ -64,10 +64,11 @@
       </div>
 
     </form>
-    <div id="tracklist" style="overflow-y:scroll; max-height:50%"></div>
     <form>
       <button type="button" onclick="get_track_links()">List tracks</button>
+      <button type="button" onclick="lyrics()">lyrics</button>
     </form>
+    <div id="bottom-half" style="overflow-y:scroll; max-height:50%"></div>
     </article>
     </div>
   </main>

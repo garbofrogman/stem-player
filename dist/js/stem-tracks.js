@@ -4,7 +4,6 @@ var playlist = WaveformPlaylist.init({
   barWidth: 1,
   barGap: 0,
   container: document.getElementById("playlist"),
-  timescale: true,
   state: "select",
   isAutomaticScroll: true,
   colors: {
@@ -17,7 +16,7 @@ var playlist = WaveformPlaylist.init({
       stereoPan: false,
     },
   },
-  zoomLevels: [500, 1000, 3000, 5000],
+  zoomLevels: [100, 500, 1000, 3000, 5000],
 });
 
 let stem_state = {
@@ -64,6 +63,21 @@ function load_stems(track_name){
   return false;
 }
 
+// Data is too big to sent to Server
+// TODO try this directly in fileserver
+// function saveStemInfo(stem){
+//   let wave = JSON.stringify(stem.peaks);
+//   console.log(wave);
+//   const response = fetch("http://localhost:3009/save/", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: wave,
+//   });
+//   return false;
+// }
+
 function getStemType(s_name){
   console.log(s_name);
   if (s_name in stem_state){
@@ -81,7 +95,11 @@ function getStemType(s_name){
 }
 
 ee.on("mute", function(stem) {
-  console.log(stem["name"]);
   let s_name = getStemType(stem["name"]);
   stem_state[s_name]["muted"] ^= true;
 });
+
+// async function test(stem){
+//   const response = await fetch(`http://localhost:3009/save/${stem.peaks}`).then(res => res.json());
+//   console.log(JSON.stringify(response));
+// }

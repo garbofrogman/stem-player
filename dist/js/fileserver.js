@@ -5,8 +5,8 @@ const cors = require('cors');
 
 app.use(express.json());
 app.use(cors({
-  "origin": "*",
-  "methods": "GET"
+  origin : ['http://localhost:8080'],
+  methods : 'GET'
 }));
 
 const fs = require('fs');
@@ -48,7 +48,7 @@ function get_track_title(track_dir_name){
 function generate_links() {
   let links = "";
   for (const [track_title, stems] of Object.entries(track_list)) {
-    links += "<a href='#playlist' onclick='load_stems(\"" + track_title + "\")'>" + track_title + "</a><br>";
+    links += "<a href='#top' onclick='load_stems(\"" + track_title + "\")'>" + track_title + "</a><br>";
   };
   return links;
 }
@@ -80,6 +80,16 @@ app.get('/links', (req, res) => {
   let data = generate_links()
   res.send(data);
 });
+
+// app.post('/save', (req, res) => {
+  // let wave = JSON.stringify(req.body);
+  // fs.writeFile("../../test.json", wave, function(err) {
+  //   if (err) {
+  //     return console.log(err);
+  //     console.log("Waveform saved");
+  //   };
+  // });
+// });
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

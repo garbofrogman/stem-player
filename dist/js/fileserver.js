@@ -31,30 +31,40 @@ function get_tracks() {
   });
     let count = 0;
     files.forEach( function(track_dir){
-      if (fs.statSync(music_dir + track_dir).isDirectory()){
-        let track_path = music_dir + track_dir;
-        let n_track = "track" + count;
-        // let track_info = getTrackInfo(track_path)
-        getTrackInfo(track_path);
-        let track_title = get_track_title(track_dir);
-        let track_stems = stems_constructor( track_path );
-        tracks[track_title] = track_stems;
-      }
+      if (! fs.statSync(music_dir + track_dir).isDirectory()) {
+        return;
+      };
+      const track_path = music_dir + track_dir;
+      const song_ini = track_path + "/song.ini";
+      const n_track = "track" + count;
+
+      let title;
+      let artist;
+      let album;
+      let length;
+
+      if (fs.existsSync(song_ini)) {
+        const data = ini.parse(fs.readFileSync(song_ini, 'utf-8'));
+        title = data['song']['name'];
+        artist = data['song']['artist'];
+        album = data['song']['album'];
+        length = Math.floor(data['song']['song_length'] / 1000);
+      } else {
+      // let track_info = getTrackInfo(track_path)
+        title = get_track_title(track_dir);
+      };
+      
+      tracks[title] = {
+        "title" : title,
+        "artist" : artist,
+        "album" : album,
+        "length" : length,
+        "stems" : stems_constructor(track_path)
+      };
       count++;
     });
   return tracks;
 };
-
-function getTrackInfo(path){
-  const pini = path + "/song.ini";
-  let info = {}
-  if (fs.existsSync(pini)) {
-    const data = ini.parse(fs.readFileSync(pini, 'utf-8'));
-    console.log(data);
-  } else {
-    console.log("no song.ini found in" + path);
-  }
-}
 
 function get_track_title(track_dir_name){
   return track_dir_name.replace(/[^a-zA-Z0-9 ]/g, "");
@@ -65,6 +75,7 @@ function generate_links() {
   for (const [track_title, stems] of Object.entries(track_list)) {
     links += "<a href='#top' onclick='load_stems(\"" + track_title + "\")'>" + track_title + "</a><br>";
   };
+  console.log(links);
   return links;
 }
 

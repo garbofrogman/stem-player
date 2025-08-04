@@ -32,6 +32,9 @@ let stem_state = {
   "vocals" : {
       "muted" : false,
   },
+  "keys" : {
+      "muted" : false,
+  },
   "song" : {
       "muted" : false,
   },
@@ -54,11 +57,11 @@ async function get_track_links(){
 
 function load_stems(track_name){
   playlist.clear();
-  track_info[track_name].forEach(function(stem) {
+  track_info[track_name]["stems"].forEach(function(stem) {
     let s_type = getStemType(stem["name"]);
     stem["muted"] = stem_state[s_type]["muted"];
   });
-  playlist.load(track_info[track_name]);
+  playlist.load(track_info[track_name]["stems"]);
   document.getElementById("track-name").innerText = track_name;
   return false;
 }
@@ -99,7 +102,7 @@ ee.on("mute", function(stem) {
   stem_state[s_name]["muted"] ^= true;
 });
 
-// async function test(stem){
-//   const response = await fetch(`http://localhost:3009/save/${stem.peaks}`).then(res => res.json());
-//   console.log(JSON.stringify(response));
-// }
+async function test(stem){
+  const response = await fetch(`https://lrclib.net/api/get?artist_name=Borislav+Slavov&track_name=I+Want+to+Live&album_name=Baldur%27s+Gate+3+(Original+Game+Soundtrack)&duration=233`).then(res => res.json());
+  console.log(JSON.stringify(response));
+}

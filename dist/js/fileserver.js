@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3009; // TODO - check if port is in use
 const cors = require('cors');
+const lyricsHandler = require('./lyrics.js');
 
 app.use(express.json());
 app.use(cors({
@@ -10,6 +11,7 @@ app.use(cors({
 }));
 
 const fs = require('fs');
+const ini = require('ini');
 
 let music_dir = "../media/audio/Stems/"
 let files = fs.readdirSync(music_dir);
@@ -32,6 +34,8 @@ function get_tracks() {
       if (fs.statSync(music_dir + track_dir).isDirectory()){
         let track_path = music_dir + track_dir;
         let n_track = "track" + count;
+        // let track_info = getTrackInfo(track_path)
+        getTrackInfo(track_path);
         let track_title = get_track_title(track_dir);
         let track_stems = stems_constructor( track_path );
         tracks[track_title] = track_stems;
@@ -40,6 +44,17 @@ function get_tracks() {
     });
   return tracks;
 };
+
+function getTrackInfo(path){
+  const pini = path + "/song.ini";
+  let info = {}
+  if (fs.existsSync(pini)) {
+    const data = ini.parse(fs.readFileSync(pini, 'utf-8'));
+    console.log(data);
+  } else {
+    console.log("no song.ini found in" + path);
+  }
+}
 
 function get_track_title(track_dir_name){
   return track_dir_name.replace(/[^a-zA-Z0-9 ]/g, "");
@@ -79,6 +94,10 @@ app.get('/tracks', (req, res) => {
 app.get('/links', (req, res) => {
   let data = generate_links()
   res.send(data);
+});
+
+app.get('/test', (req, res) => {
+  // return lyricsHandler.getLrcFile("All Star", "Smash Mouth");
 });
 
 // app.post('/save', (req, res) => {

@@ -34,10 +34,12 @@
     "lodash.assign": "",
     "lodash.defaultsdeep": "",
     "lodash.forown": "",
+    "lrclib-api": "",
     "tone": "",
     "uuid": "",
     "virtual-dom": "",
-    "webaudio-peaks": ""
+    "webaudio-peaks": "",
+    "ini": ""
   },
   "scripts": {
     "clean": "rm -Rf dist && rm -Rf lib && rm -Rf build && rm -Rf styles",

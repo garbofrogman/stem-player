@@ -12,7 +12,6 @@
     "@babel/preset-env": "",
     "ajv": "",
     "babel-loader": "",
-    "gh-pages": "",
     "mkdirp": "",
     "prettier": "",
     "sass": "",

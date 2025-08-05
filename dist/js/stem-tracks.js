@@ -103,15 +103,17 @@ ee.on("mute", function(stem) {
   stem_state[s_name]["muted"] ^= true;
 });
 
-// function lyrics(t_obj) {
-//   document.getElementById("bottom-half").innerHTML = JSON.stringify(track_info);
-// }
+function showLyrics() {
+  document.getElementById("bottom-half").innerHTML = JSON.stringify(track_info["lyrics"]);
+}
 
 async function getLyrics(t_obj){
   const title = t_obj["title"].replace(" ", "+");
   const artist = t_obj["artist"].replace(" ", "+");
   const album = t_obj["album"].replace(" ", "+");
   const length = t_obj["length"]
-  const response = await fetch(`https://lrclib.net/api/get?artist_name=${artist}&track_name=${title}&album_name=${album}&duration=${length}`).then(res => res.json());
-  console.log(JSON.stringify(response));
+  const lyrics = await fetch(`https://lrclib.net/api/get?artist_name=${artist}&track_name=${title}&album_name=${album}&duration=${length}`).then(res => res.json());
+  console.log(lyrics);
+  track_info["lyrics"] = lyrics;
+  return lyrics;
 }

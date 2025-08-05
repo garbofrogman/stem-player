@@ -30,16 +30,17 @@
     "event-emitter": "",
     "fade-curves": "",
     "fade-maker": "",
+    "ini": "",
     "inline-worker": "",
     "lodash.assign": "",
     "lodash.defaultsdeep": "",
     "lodash.forown": "",
     "lrclib-api": "",
+    "paroles": "",
     "tone": "",
     "uuid": "",
     "virtual-dom": "",
-    "webaudio-peaks": "",
-    "ini": ""
+    "webaudio-peaks": ""
   },
   "scripts": {
     "clean": "rm -Rf dist && rm -Rf lib && rm -Rf build && rm -Rf styles",
